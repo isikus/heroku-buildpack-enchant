@@ -29,7 +29,7 @@ do
     DICT_FILES="${DICT_FILES} $base"
 done
 echo ${DICT_FILES}
-echo zcat $DICT_DIR/\${x}.${ext} | precat | aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master \${x}.rws
+echo zcat $DICT_DIR/\${x}.${ext} \| precat \| aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master \${x}.rws
 
 topic "Writing profile script"
 cat <<EOF >${BUILD_DIR}/.profile.d/005_enchant.sh
