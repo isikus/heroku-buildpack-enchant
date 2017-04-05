@@ -5,7 +5,7 @@
 # set -e
 
 # debug
-set -x
+# set -x
 BUILD_DIR=$1
 
 function topic() 
@@ -23,7 +23,7 @@ echo DICT_DIR ${PREFIX_DIR}/share/aspell/
 echo ASPELL_DIR ${PREFIX_DIR}/lib/aspell/
 
 topic "Remove old aspell symlink"
-rm ${ASPELL_DIR}/*.rws
+rm -v ${ASPELL_DIR}/*.rws
 
 topic "Create aspell dictionnary"
 for x in `ls -C1 ${DICT_DIR}/*.cwl.gz`; 
@@ -38,6 +38,6 @@ done
 #export ENCHANT_MODULE_PATH=${PREFIX_DIR}/lib/x86_64-linux-gnu/enchant/
 
 topic "Symlink libenchant in .enchant"
-mkdir ${HOME}/.enchant
+mkdir ${BUILD_DIR}/.enchant
 ln -s ${PREFIX_DIR}/lib/x86_64-linux-gnu/enchant/libenchant_aspell.so ${HOME}/.enchant/libenchant_aspell.so
-cp ${PREFIX_DIR}/lib/aspell/* ${HOME}/.enchant/
+cp -v ${PREFIX_DIR}/lib/aspell/* ${BUILD_DIR}/.enchant/
