@@ -25,10 +25,11 @@ rm ${BUILD_DIR}/.apt/usr/lib/aspell/*.rws
 DICT_FILES=""
 for x in `ls -C1 ${BUILD_DIR}/.apt/usr/share/aspell/*.cwl.gz`
 do
-    filename=`basename $x $ext`
+    base=`basename $x $ext`
     DICT_FILES="${DICT_FILES} $base"
 done
 echo ${DICT_FILES}
+echo zcat $DICT_DIR/\${x}.${ext} | precat | aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master \${x}.rws
 
 topic "Writing profile script"
 cat <<EOF >${BUILD_DIR}/.profile.d/005_enchant.sh
