@@ -2,10 +2,10 @@
 # bin/compile <build-dir> <cache-dir>
 
 # fail fast
-set -e
+# set -e
 
 # debug
-# set -x
+set -x
 BUILD_DIR=$1
 
 function topic() 
@@ -13,10 +13,14 @@ function topic()
     echo "-----> $*"
 }
 
-PREFIX_DIR=${HOME}/.apt/usr
+PREFIX_DIR=${BUILD_DIR}/.apt/usr
 DICT_DIR=${PREFIX_DIR}/share/aspell/
 ASPELL_DIR=${PREFIX_DIR}/lib/aspell/
 lang=en
+
+ls -alp ${BUILD_DIR}/
+ls -alp ${BUILD_DIR}/.apt
+ls -alp ${BUILD_DIR}/.apt/usr
 
 topic "Remove old aspell symlink"
 rm ${ASPELL_DIR}/*.rws
