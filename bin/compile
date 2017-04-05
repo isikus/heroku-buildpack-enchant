@@ -27,12 +27,14 @@ do
     filename=`basename $x`
     DICT_FILES="${DICT_FILES} ${DICT_DIR}/$filename"
 done
+echo ${DICT_FILES}
 
 topic "Writing profile script"
 cat <<EOF >${BUILD_DIR}/.profile.d/005_enchant.sh
 
 for x in ${DICT_FILE}; 
 do 
+    echo doing $x
     base=`basename $x .cwl.gz`; 
     zcat ${x} | precat | aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws; 
 done
