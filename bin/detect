@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
-PKG_OK=`dpkg-query -W --showformat='${Status}\n' enchant
+PKG_OK=`dpkg-query -W --showformat='${Status}\n' enchant`
 if [ "${PKG_OK}" == "install ok installed" ]; then
-    echo "Enchant Config" && exit 0
+    echo "Enchant Config" 
+    exit 0
 else
-    echo "no" && exit 1
+    echo "no" 
+    exit 1
 fi
