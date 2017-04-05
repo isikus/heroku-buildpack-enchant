@@ -6,13 +6,13 @@ set -e
 
 # debug
 # set -x
-BUILD_DIR=$1
 
 function topic() 
 {
     echo "-----> $*"
 }
 
+BUILD_DIR=$1
 PREFIX_DIR=${HOME}/.apt/usr
 DICT_DIR=${PREFIX_DIR}/share/aspell/
 ASPELL_DIR=${PREFIX_DIR}/lib/aspell/
@@ -23,7 +23,7 @@ echo DICT_DIR ${PREFIX_DIR}/share/aspell/
 echo ASPELL_DIR ${PREFIX_DIR}/lib/aspell/
 
 topic "Remove old aspell symlink"
-rm ${ASPELL_DIR}/*.rws
+rm ${BUILD_DIR}/.apt/usr/lib/aspell/*.rws
 
 topic "Writing profile script"
 cat <<EOF >${BUILD_DIR}/.profile.d/005_enchant.sh
@@ -31,7 +31,7 @@ cat <<EOF >${BUILD_DIR}/.profile.d/005_enchant.sh
 for x in `ls -C1 ${DICT_DIR}/*.cwl.gz`; 
 do 
     base=`basename $x .cwl.gz`; 
-    zcat ${x} | precat | aspell --prefix=${HOME}/.apt/usr --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws; 
+    zcat ${x} | precat | aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws; 
 done
 
 ln -s ${PREFIX_DIR}/lib/x86_64-linux-gnu/enchant/libenchant_aspell.so ${HOME}/.enchant/libenchant_aspell.so
