@@ -17,7 +17,7 @@ PREFIX_DIR=${HOME}/.apt/usr
 DICT_DIR=${PREFIX_DIR}/share/aspell/
 ASPELL_DIR=${PREFIX_DIR}/lib/aspell/
 lang=en
-ext=.cwl.gz
+ext=cwl.gz
 
 topic "Remove old aspell symlink"
 rm ${BUILD_DIR}/.apt/usr/lib/aspell/*.rws
@@ -25,7 +25,7 @@ rm ${BUILD_DIR}/.apt/usr/lib/aspell/*.rws
 DICT_FILES=""
 for x in `ls -C1 ${BUILD_DIR}/.apt/usr/share/aspell/*.cwl.gz`
 do
-    base=`basename $x $ext`
+    base=`basename $x .$ext`
     DICT_FILES="${DICT_FILES} $base"
 done
 echo ${DICT_FILES}
