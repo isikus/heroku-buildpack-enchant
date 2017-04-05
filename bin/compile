@@ -28,7 +28,7 @@ rm ${BUILD_DIR}/.apt/usr/lib/aspell/*.rws
 topic "Writing profile script"
 cat <<EOF >${BUILD_DIR}/.profile.d/005_enchant.sh
 
-for x in `ls -C1 ${DICT_DIR}/*.cwl.gz`; 
+for x in \`ls -C1 ${DICT_DIR}/*.cwl.gz\`; 
 do 
     base=`basename $x .cwl.gz`; 
     zcat ${x} | precat | aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws; 
