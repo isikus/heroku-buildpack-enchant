@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
 
-if [ -d $1/.enchant ]; then
+if [ -f $1/${HOME}/.apt/usr/lib/x86_64-linux-gnu/enchant/libenchant_aspell.so ]; then
     echo "Enchant Config" && exit 0
 else
     echo "no" && exit 1

@@ -32,5 +32,6 @@ done
 #export ENCHANT_MODULE_PATH=${PREFIX_DIR}/lib/x86_64-linux-gnu/enchant/
 
 topic "Symlink libenchant in .enchant"
+mkdir ${HOME}/.enchant
 ln -s ${PREFIX_DIR}/lib/x86_64-linux-gnu/enchant/libenchant_aspell.so .enchant/libenchant_aspell.so
 cp ${PREFIX_DIR}/lib/aspell/* .enchant/
