@@ -23,11 +23,12 @@ topic "Remove old aspell symlink"
 rm ${BUILD_DIR}/.apt/usr/lib/aspell/*.rws
 
 topic "Writing profile script"
+echo "" > ${BUILD_DIR}/.profile.d/005_enchant.sh 
 
 for x in `ls -C1 ${BUILD_DIR}/.apt/usr/share/aspell/*.${ext}`
 do 
     base=`basename $x .$ext`
-    echo zcat $DICT_DIR/${base}.${ext} \| precat \| aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws >${BUILD_DIR}/.profile.d/005_enchant.sh
+    echo zcat $DICT_DIR/${base}.${ext} \| precat \| aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws >>${BUILD_DIR}/.profile.d/005_enchant.sh
 done
 
 cat <<EOF >>${BUILD_DIR}/.profile.d/005_enchant.sh
