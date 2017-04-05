@@ -22,26 +22,17 @@ ext=cwl.gz
 topic "Remove old aspell symlink"
 rm ${BUILD_DIR}/.apt/usr/lib/aspell/*.rws
 
-DICT_FILES=""
-for x in `ls -C1 ${BUILD_DIR}/.apt/usr/share/aspell/*.cwl.gz`
-do
-    base=`basename $x .$ext`
-    DICT_FILES="${DICT_FILES} $base"
-done
-echo ${DICT_FILES}
-echo zcat $DICT_DIR/\${x}.${ext} \| precat \| aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master \${x}.rws
-
 topic "Writing profile script"
-cat <<EOF >${BUILD_DIR}/.profile.d/005_enchant.sh
 
-for x in ${DICT_FILE}; 
+for x in `ls -C1 ${BUILD_DIR}/.apt/usr/share/aspell/*.${ext}`
 do 
-    zcat $DICT_DIR/\${x}.${ext} | precat | aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master \${x}.rws; 
+    base=`basename $x .$ext`
+    echo zcat $DICT_DIR/${base}.${ext} \| precat \| aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws >${BUILD_DIR}/.profile.d/005_enchant.sh
 done
 
+cat <<EOF >>${BUILD_DIR}/.profile.d/005_enchant.sh
 ln -s ${PREFIX_DIR}/lib/x86_64-linux-gnu/enchant/libenchant_aspell.so ${HOME}/.enchant/libenchant_aspell.so
 cp ${ASPELL_DIR}/* ${HOME}/.enchant/
-
 EOF
 
 topic "creating .enchant"
