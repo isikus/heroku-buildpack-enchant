@@ -18,17 +18,20 @@ DICT_DIR=${PREFIX_DIR}/share/aspell/
 ASPELL_DIR=${PREFIX_DIR}/lib/aspell/
 lang=en
 
-echo BUILD_DIR ${BUILD_DIR}/.apt/usr
-echo DICT_DIR ${PREFIX_DIR}/share/aspell/
-echo ASPELL_DIR ${PREFIX_DIR}/lib/aspell/
-
 topic "Remove old aspell symlink"
 rm ${BUILD_DIR}/.apt/usr/lib/aspell/*.rws
+
+DICT_FILES=""
+for x in `ls -C1 ${BUILD_DIR}/.apt/usr/share/aspell/*.cwl.gz`
+do
+    filename=`basename $x`
+    DICT_FILES="${DICT_FILES} ${DICT_DIR}/$filename"
+done
 
 topic "Writing profile script"
 cat <<EOF >${BUILD_DIR}/.profile.d/005_enchant.sh
 
-for x in \`ls -C1 ${DICT_DIR}/*.cwl.gz\`; 
+for x in ${DICT_FILE}; 
 do 
     base=`basename $x .cwl.gz`; 
     zcat ${x} | precat | aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws; 
