@@ -2,7 +2,7 @@
 # bin/compile <build-dir> <cache-dir>
 
 # fail fast
-# set -e
+set -e
 
 # debug
 # set -x
@@ -23,14 +23,14 @@ echo DICT_DIR ${PREFIX_DIR}/share/aspell/
 echo ASPELL_DIR ${PREFIX_DIR}/lib/aspell/
 
 topic "Remove old aspell symlink"
-rm -v ${ASPELL_DIR}/*.rws
+rm ${ASPELL_DIR}/*.rws
 
 topic "Create aspell dictionnary"
 for x in `ls -C1 ${DICT_DIR}/*.cwl.gz`; 
 do 
     echo Doing $x 
     base=`basename $x .cwl.gz`; 
-    zcat ${x} | precat | aspell --prefix=/app/.apt/usr --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws; 
+    zcat ${x} | precat | aspell --prefix=${BUILD_DIR}/.apt/usr --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws; 
 done
 
 # Setting environment variable
