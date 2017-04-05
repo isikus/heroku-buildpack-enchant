@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
-
-if [ -f ${HOME}/.apt/usr/lib/x86_64-linux-gnu/enchant/libenchant_aspell.so ]; then
+PKG_OK=`dpkg-query -W --showformat='${Status}\n' enchant
+if [ "${PKG_OK}" == "install ok installed" ]; then
     echo "Enchant Config" && exit 0
 else
     echo "no" && exit 1
