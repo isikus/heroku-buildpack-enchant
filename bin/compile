@@ -12,7 +12,6 @@ function topic()
     echo "-----> $*"
 }
 
-BUILD_DIR=$1
 PREFIX_DIR=${HOME}/.apt/usr
 DICT_DIR=${PREFIX_DIR}/share/aspell/
 ASPELL_DIR=${PREFIX_DIR}/lib/aspell/
@@ -20,25 +19,25 @@ lang=en
 ext=cwl.gz
 
 topic "Remove old aspell symlink"
-rm ${BUILD_DIR}/.apt/usr/lib/aspell/*.rws
+rm /.apt/usr/lib/aspell/*.rws
 
 topic "Writing profile script"
-echo "" > ${BUILD_DIR}/.profile.d/005_enchant.sh 
+echo "" > /.profile.d/005_enchant.sh 
 
-for x in `ls -C1 ${BUILD_DIR}/.apt/usr/share/aspell/*.${ext}`
+for x in `ls -C1 /.apt/usr/share/aspell/*.${ext}`
 do 
     base=`basename $x .$ext`
-    echo zcat $DICT_DIR/${base}.${ext} \| precat \| aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws >>${BUILD_DIR}/.profile.d/005_enchant.sh
+    echo zcat $DICT_DIR/${base}.${ext} \| precat \| aspell --prefix=${PREFIX_DIR} --local-data-dir=${ASPELL_DIR} --lang=${lang} create master ${base}.rws >>/.profile.d/005_enchant.sh
 done
 
-cat <<EOF >>${BUILD_DIR}/.profile.d/005_enchant.sh
+cat <<EOF >>/.profile.d/005_enchant.sh
 ln -s ${PREFIX_DIR}/lib/x86_64-linux-gnu/enchant/libenchant_aspell.so ${HOME}/.enchant/libenchant_aspell.so
 cp ${ASPELL_DIR}/* ${HOME}/.enchant/
 EOF
 
 topic "creating .enchant"
-mkdir ${BUILD_DIR}/.enchant
+mkdir /.enchant
 
-# cp ${PREFIX_DIR}/lib/x86_64-linux-gnu/enchant/libenchant_aspell.so ${BUILD_DIR}/.enchant/libenchant_aspell.so
-# cp ${PREFIX_DIR}/lib/aspell/* ${BUILD_DIR}/.enchant/
-# cp ${HOME}/lib/aspell/* ${BUILD_DIR}/.enchant/
+# cp ${PREFIX_DIR}/lib/x86_64-linux-gnu/enchant/libenchant_aspell.so /.enchant/libenchant_aspell.so
+# cp ${PREFIX_DIR}/lib/aspell/* /.enchant/
+# cp ${HOME}/lib/aspell/* /.enchant/
