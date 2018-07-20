@@ -19,7 +19,7 @@ lang=en
 ext=cwl.gz
 
 topic "Writing profile script"
-touch /.profile.d/005_enchant.sh 
+install -D /dev/null /.profile.d/005_enchant.sh 
 
 for x in `ls -C1 /.apt/usr/share/aspell/*.${ext}`
 do 
