@@ -18,9 +18,6 @@ ASPELL_DIR=${PREFIX_DIR}/lib/aspell/
 lang=en
 ext=cwl.gz
 
-topic "Remove old aspell symlink"
-rm /.apt/usr/lib/aspell/*.rws
-
 topic "Writing profile script"
 echo "" > /.profile.d/005_enchant.sh 
 
